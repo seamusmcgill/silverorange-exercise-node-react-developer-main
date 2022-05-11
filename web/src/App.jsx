@@ -16,6 +16,15 @@ export function App() {
       setRepos(sortedRepos);
     });
   }, []);
+  // Convert repos into JSX tables
+  const reposRows = repos.map((repo) => (
+    <tr key={repo.id}>
+      <td>{repo.name}</td>
+      <td>{repo.description}</td>
+      <td>{repo.language}</td>
+      <td>{repo.forks}</td>
+    </tr>
+  ));
   return (
     <div className="App">
       <header className="App-header">
