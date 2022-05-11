@@ -14,3 +14,14 @@ const checkIfValidRepo = (repository) => {
       checkIfValidRepo(repository);
     });
   });
+
+  // Fetch repos data from GitHub API
+  axios
+    .get('https://api.github.com/users/silverorange/repos')
+    .then((response) => {
+      const githubRepos = response.data;
+      // Append repos that match the fork condition into the array of repos
+      githubRepos.forEach((repository) => {
+        checkIfValidRepo(repository);
+      });
+    });
