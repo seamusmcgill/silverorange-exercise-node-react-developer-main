@@ -25,3 +25,8 @@ const checkIfValidRepo = (repository) => {
         checkIfValidRepo(repository);
       });
     });
+  // Set response header content-type to application/json
+  res.header({
+    'Cache-Control': 'no-store',
+    'Content-Type': 'application/json',
+  });
