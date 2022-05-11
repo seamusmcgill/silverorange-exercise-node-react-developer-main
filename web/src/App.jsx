@@ -4,6 +4,18 @@ import logo from './logo.svg';
 import './App.css';
 
 export function App() {
+  useEffect(() => {
+    // Fetch array of repos from backend API
+    axios.get('http://localhost:4000/repos').then((response) => {
+      // Sort repos by descending chronological date
+      const sortedRepos = response.data.sort(
+        (repoA, repoB) =>
+          new Date(repoB.created_at) - new Date(repoA.created_at)
+      );
+      // Set repos state object to the sorted array
+      setRepos(sortedRepos);
+    });
+  }, []);
   return (
     <div className="App">
       <header className="App-header">
