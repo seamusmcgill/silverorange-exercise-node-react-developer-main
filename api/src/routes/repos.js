@@ -10,7 +10,7 @@ const reposArray = [];
 
 // Function to append valid repos to reposArray
 const checkIfValidRepo = (repository) => {
-  if (!repository.fork) {
+  if (repository.fork === false) {
     reposArray.push(repository);
   }
 };
