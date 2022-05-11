@@ -1,3 +1,11 @@
+import { Router } from 'express';
+import * as fs from 'fs/promises';
+import path from 'path';
+import axios from 'axios';
+
+export const repos = Router();
+
+// Initialize array of repos to be returned
 const reposArray = [];
 
 // Function to append valid repos to reposArray
@@ -7,6 +15,7 @@ const checkIfValidRepo = (repository) => {
   }
 };
 
+repos.get('/', async (_, res) => {
   // Read from repos.json file
   fs.readFile(path.resolve('data/repos.json')).then((data) => {
     // Append repos that match the fork condition into the array of repos
@@ -30,3 +39,9 @@ const checkIfValidRepo = (repository) => {
     'Cache-Control': 'no-store',
     'Content-Type': 'application/json',
   });
+
+  res.status(200);
+
+  // Return the array of valid repos
+  res.json(reposArray);
+});
