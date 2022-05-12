@@ -40,6 +40,31 @@ export function App() {
     });
   }, [state.language]);
 
+  useEffect(() => {
+    // Get commit history when repo in state changes
+    if (state.repo.name) {
+      axios
+        .get(
+          `https://api.github.com/repos/silverorange/${state.repo.name}/commits`
+        )
+        .then((response) => {
+          const commitsArray = response.data;
+          const last_commit_date = commitsArray[0].commit.author.date;
+          const last_commit_author = commitsArray[0].commit.author.name;
+          // Update repo object in state to include the last commit date and author
+          setState((prev) => {
+            return {
+              ...prev,
+              repo: {
+                ...prev.repo,
+                last_commit_date,
+                last_commit_author,
+              },
+            };
+          });
+        });
+    }
+  }, [state.repo]);
   // Convert repos into JSX tables
   const reposRows = state.repos.map((repo) => (
     <tr key={repo.id}>
