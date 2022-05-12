@@ -16,8 +16,18 @@ export function App() {
         (repoA, repoB) =>
           new Date(repoB.created_at) - new Date(repoA.created_at)
       );
-      // Set repos state object to the sorted array
-      setRepos(sortedRepos);
+      // Initialize empty languages array
+      const languagesArray = [];
+      // Add languages of repos to array
+      sortedRepos.forEach((repo) => {
+        if (!languagesArray.includes(repo.language)) {
+          languagesArray.push(repo.language);
+        }
+      });
+      // Set state object to the sorted repo array and language array
+      setState((prev) => {
+        return { ...prev, repos: sortedRepos, languages: languagesArray };
+      });
     });
   }, []);
   // Convert repos into JSX tables
