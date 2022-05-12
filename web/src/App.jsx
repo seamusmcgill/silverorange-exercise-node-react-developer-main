@@ -74,6 +74,17 @@ export function App() {
         </thead>
         <tbody>{reposRows}</tbody>
       </table>
+      {languageButtons}
+      <button
+        type="button"
+        onClick={() => {
+          setState((prev) => {
+            return { ...prev, language: '' };
+          });
+        }}
+      >
+        {'Clear'}
+      </button>
     </div>
   );
 }
