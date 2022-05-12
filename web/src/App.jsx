@@ -65,10 +65,21 @@ export function App() {
         });
     }
   }, [state.repo]);
+
   // Convert repos into JSX tables
   const reposRows = state.repos.map((repo) => (
     <tr key={repo.id}>
-      <td>{repo.name}</td>
+      <td
+        className="repoTitle"
+        // Changes repo in state on click
+        onClick={() => {
+          setState((prev) => {
+            return { ...prev, repo };
+          });
+        }}
+      >
+        {repo.name}
+      </td>
       <td>{repo.description}</td>
       <td>{repo.language}</td>
       <td>{repo.forks}</td>
