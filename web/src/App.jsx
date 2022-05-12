@@ -1,5 +1,6 @@
 import { useEffect, useState, React } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
 import './App.css';
 
 export function App() {
@@ -48,20 +49,31 @@ export function App() {
           `https://api.github.com/repos/silverorange/${state.repo.name}/commits`
         )
         .then((response) => {
+          // Assign commit data to variables
           const commitsArray = response.data;
           const last_commit_date = commitsArray[0].commit.author.date;
           const last_commit_author = commitsArray[0].commit.author.name;
+          // Get the raw README markdown
+          axios
+            .get(
+              `https://raw.githubusercontent.com/${state.repo.full_name}/master/README.md`
+            )
+            .then((res) => {
+              const readME = res.data;
+              // Update state with readME and commit data
+              setState((prev) => {
+                return {
+                  ...prev,
+                  repo: {
+                    ...prev.repo,
+                    last_commit_date,
+                    last_commit_author,
+                    readME,
+                  },
+                };
+              });
+            });
           // Update repo object in state to include the last commit date and author
-          setState((prev) => {
-            return {
-              ...prev,
-              repo: {
-                ...prev.repo,
-                last_commit_date,
-                last_commit_author,
-              },
-            };
-          });
         });
     }
   }, [state.repo]);
@@ -141,6 +153,7 @@ export function App() {
           <p>
             <strong>Last commit author:</strong> {state.repo.last_commit_author}
           </p>
+          <ReactMarkdown children={state.repo.readME} />
           <button
             type="button"
             onClick={() => {
