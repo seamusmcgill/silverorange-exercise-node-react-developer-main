@@ -107,28 +107,28 @@ export function App() {
       {/* Render repo list if no repo selected */}
       {!state.repo.name && (
         <>
-      <table>
-        <thead>
-          <tr>
-            <th>Repository Name</th>
-            <th>Description</th>
-            <th>Language</th>
-            <th># of Forks</th>
-          </tr>
-        </thead>
-        <tbody>{reposRows}</tbody>
-      </table>
-      {languageButtons}
-      <button
-        type="button"
-        onClick={() => {
-          setState((prev) => {
-            return { ...prev, language: '' };
-          });
-        }}
-      >
-        {'Clear'}
-      </button>
+          <table>
+            <thead>
+              <tr>
+                <th>Repository Name</th>
+                <th>Description</th>
+                <th>Language</th>
+                <th># of Forks</th>
+              </tr>
+            </thead>
+            <tbody>{reposRows}</tbody>
+          </table>
+          {languageButtons}
+          <button
+            type="button"
+            onClick={() => {
+              setState((prev) => {
+                return { ...prev, language: '' };
+              });
+            }}
+          >
+            {'Clear'}
+          </button>
         </>
       )}
       {/* Render specific repo if selected */}
