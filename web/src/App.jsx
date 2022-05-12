@@ -86,10 +86,12 @@ export function App() {
     </tr>
   ));
 
+  // Renders language buttons
   const languageButtons = state.languages.map((language) => (
     <button
       type="button"
       key={language}
+      // Changes language in state on click
       onClick={() => {
         setState((prev) => {
           return { ...prev, language };
@@ -99,8 +101,12 @@ export function App() {
       {language}
     </button>
   ));
+
   return (
     <div className="App">
+      {/* Render repo list if no repo selected */}
+      {!state.repo.name && (
+        <>
       <table>
         <thead>
           <tr>
@@ -123,6 +129,30 @@ export function App() {
       >
         {'Clear'}
       </button>
+        </>
+      )}
+      {/* Render specific repo if selected */}
+      {state.repo.name && (
+        <>
+          <h1>{state.repo.name}</h1>
+          <p>
+            <strong>Last commit date:</strong> {state.repo.last_commit_date}
+          </p>
+          <p>
+            <strong>Last commit author:</strong> {state.repo.last_commit_author}
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setState((prev) => {
+                return { ...prev, repo: '' };
+              });
+            }}
+          >
+            {'Back'}
+          </button>
+        </>
+      )}
     </div>
   );
 }
