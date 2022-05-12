@@ -3,8 +3,10 @@ import axios from 'axios';
 import './App.css';
 
 export function App() {
+  // Creates state object with repos list and selected repo, language list and selected language
   const [state, setState] = useState({
     repos: [],
+    repo: '',
     languages: [],
     language: '',
   });
