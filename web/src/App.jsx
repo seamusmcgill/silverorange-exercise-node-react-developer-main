@@ -8,11 +8,12 @@ export function App() {
     languages: [],
     language: '',
   });
+
   useEffect(() => {
     // Fetch array of repos from backend API
     axios.get('http://localhost:4000/repos').then((response) => {
       // Sort repos by descending chronological date
-      const sortedRepos = response.data.sort(
+      let sortedRepos = response.data.sort(
         (repoA, repoB) =>
           new Date(repoB.created_at) - new Date(repoA.created_at)
       );
@@ -24,14 +25,21 @@ export function App() {
           languagesArray.push(repo.language);
         }
       });
+      // Filter repos if a language button is clicked
+      if (state.language) {
+        sortedRepos = sortedRepos.filter(
+          (repo) => repo.language === state.language
+        );
+      }
       // Set state object to the sorted repo array and language array
       setState((prev) => {
         return { ...prev, repos: sortedRepos, languages: languagesArray };
       });
     });
-  }, []);
+  }, [state.language]);
+
   // Convert repos into JSX tables
-  const reposRows = repos.map((repo) => (
+  const reposRows = state.repos.map((repo) => (
     <tr key={repo.id}>
       <td>{repo.name}</td>
       <td>{repo.description}</td>
