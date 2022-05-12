@@ -1,9 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-
+import { useEffect, useState, React } from 'react';
+import axios from 'axios';
 import './App.css';
 
 export function App() {
+  const [state, setState] = useState({
+    repos: [],
+    languages: [],
+    language: '',
+  });
   useEffect(() => {
     // Fetch array of repos from backend API
     axios.get('http://localhost:4000/repos').then((response) => {
