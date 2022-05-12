@@ -39,6 +39,20 @@ export function App() {
       <td>{repo.forks}</td>
     </tr>
   ));
+
+  const languageButtons = state.languages.map((language) => (
+    <button
+      type="button"
+      key={language}
+      onClick={() => {
+        setState((prev) => {
+          return { ...prev, language };
+        });
+      }}
+    >
+      {language}
+    </button>
+  ));
   return (
     <div className="App">
       <table>
